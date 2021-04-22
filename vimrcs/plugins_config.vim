@@ -11,27 +11,3 @@ Plug 'preservim/nerdcommenter'
 Plug 'pechorin/any-jump.vim'
 
 call plug#end()
-
-
-""""""""""""""""""""""""""""""
-" => Molokai
-""""""""""""""""""""""""""""""
-    set background=dark
-    colorscheme molokai
-
-
-""""""""""""""""""""""""""""""
-" => Nerdtree
-""""""""""""""""""""""""""""""
-    let g:NERDTreeRespectWildIgnore = 1
-    let g:NERDTreeShowHidden=1
-
-    map <F9> :NERDTreeToggle <CR>
-
-
-""""""""""""""""""""""""""""""
-" => Vim-Better-Whitespace
-""""""""""""""""""""""""""""""
-    let g:better_whitespace_enabled=1
-    let g:strip_whitespace_on_save=1
-
