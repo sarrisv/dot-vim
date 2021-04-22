@@ -9,5 +9,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'preservim/nerdcommenter'
 Plug 'pechorin/any-jump.vim'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
