@@ -1,33 +1,56 @@
-" User Options
+"""""""""""""""""""""""""""""""""
+" Sections                      "
+" - User Settings               "
+" - Options                     "
+"   - Directory                 "
+"   - Bells / Notifications     "
+"   - Mouse                     "
+"   - TUI                       "
+"   - Terminal                  "
+"   - Status Line               "
+"   - Movement                  "
+"   - vimdiff                   "
+"   - Files                     "
+"   - Wildignore                "
+"   - Filetype                  "
+"   - Spaces                    "
+"   - Linebreaks                "
+"   - Folds                     "
+"   - Buffers                   "
+"   - Undo                      "
+"   - Search                    "
+"   - Language                  "
+" - Helper Functions            "
+"   - ToggleHighlightSearch     "
+"   - CleanTrailingSpaces       "
+"   - OnWrite                   "
+" - Non-Leader Mappings         "
+"   - Cursor Movement           "
+"   - Window Movement           "
+" - Leader Mappings             "
+"   - Clipboard                 "
+"   - Formatting                "
+"   - Spell Check               "
+"   - Tab Controls              "
+"   - Window Controls           "
+"   - Buffer Controls           "
+"""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""
+" => User Settings     "
+""""""""""""""""""""""""
 let tab_size=2
 let mapleader=','
 let $MYVIM=$HOME . '/.vim'
+let window_orientation='vertical' " vertical or horizontal, used to define key mappings
 
 
-" Sections
-"  - Settings
-"    - Directory
-"    - Bells / Notifications
-"    - Mouse
-"    - TUI
-"    - Terminal
-"    - Status Line
-"    - Movement
-"    - vimdiff
-"    - Files
-"    - Wildignore
-"    - Filetype
-"    - Spaces
-"    - Linebreaks
-"    - Folds
-"    - Buffers
-"    - Undo
-"    - Search
-"    - Language
-"  - Helper Functions
-"  - Key Mappings
 
-
+""""""""""""""""""""""
+" => Vim Options     "
+""""""""""""""""""""""
 " Directory
 set autochdir
 set cdhome
@@ -132,9 +155,9 @@ set showmatch
 
 " Buffers
 set hidden  " allows unfocused tabs to remain in buffer instead of writing changes
-set switchbuf=useopen
+set switchbuf=useopen,usetab,newtab
 set splitright
-
+set splitbelow
 
 " Undo
 set noswapfile
@@ -157,9 +180,10 @@ set spelllang=en_us
 set spellsuggest+=5
 
 
-"""""""""""""""""""""""""""
-"     Helper Funcions     "
-"""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""
+" => Helper Funcions     "
+""""""""""""""""""""""""""
 " Highlights words when using search, removes highlight when not
 augroup ToggleHighlightSearch
   autocmd!
@@ -194,37 +218,72 @@ augroup OnWrite
 augroup END
 
 
-""""""""""""""""""""""""
-"     Key Mappings     "
-""""""""""""""""""""""""
-" Enhanced Movement
+
+""""""""""""""""""""""""""""""
+" => Non-Leader Mappings     "
+""""""""""""""""""""""""""""""
+" Cursor Movement: left / right / down / up
 map H ^
 map L $
 map J <PageDown>
 map K <PageUp>
 
+" Window Movement: left / right / down / up
+"   - from to amix/vimrc
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+map <C-j> <C-W>j
+map <C-k> <C-W>k
 
-" Quick Save
-nmap <leader>w :w!<cr>
 
-
-" System Clipboard: copy / cut / paste
-" - whole line in normal
-" - selected area in visual
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Leader Mappings                                  "
+"   - general style: <leader><prefix><command>        "
+"     - prefix matches first letter of section        "
+"     - command matches first letter of command       "
+"       - movement follow vim-conventions instead     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clipboard: yank / delete / paste
+"   - whole line in normal
+"   - selected area in visual
 nmap <leader>cy "+yy
 vmap <leader>cy "+y
 nmap <leader>cd "+dd
 vmap <leader>cd "+d
 nmap <leader>cp "+p
 
-" Format Text
-" - fc (format clean): make text in clipboard vim-friendly
+
+" Format Text: clean
 nmap <leader>fc :let @+=substitute(substitute(strtrans(@+),'-\^@','','g'),'\^@',' ','g')<cr>
 
 
-" Spell Check:  toggle / next / prev / add / select
-map <leader>ss :setlocal spell!<cr>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" Spell Check:  toggle / prev / next / add / select
+nmap <leader>ss :setlocal spell!<cr>
+nmap <leader>sh [s
+nmap <leader>sl ]s
+nmap <leader>sa zg
+nmap <leader>s? z=
+
+
+" Tab Controls: new / edit / prev / next / close / only
+"   - prev+next have no prefix since they are commonly used
+nmap <leader>tn :tabnew<cr>
+nmap <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+nmap <leader>h :tabprevious<cr>
+nmap <leader>l :tabnext<cr>
+nmap <leader>tc :tabclose<cr>
+nmap <leader>to :tabonly<cr>
+
+
+" Window Controls: new / split / left / right / down / up
+if (window_orientation=='vertical')
+  nmap <leader>wn :vnew<cr>
+  nmap <leader>ws :vsplit<cr>
+else
+  nmap <leader>wn :new<cr>
+  nmap <leader>ws :split<cr>
+endif
+
+" Buffer Controls: prev / next
+map <leader>bh :bprevious<cr>
+map <leader>bl :bnext<cr>
