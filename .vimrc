@@ -216,7 +216,10 @@ vmap <leader>cy "+y
 nmap <leader>cd "+dd
 vmap <leader>cd "+d
 nmap <leader>cp "+p
-nmap <leader>cf let @a=substitue(strtrans(@+),'\^@',' ','g') | "ap
+
+" Format Text
+" - fc (format clean): make text in clipboard vim-friendly
+nmap <leader>fc :let @+=substitute(substitute(strtrans(@+),'-\^@','','g'),'\^@',' ','g')<cr>
 
 
 " Spell Check:  toggle / next / prev / add / select
